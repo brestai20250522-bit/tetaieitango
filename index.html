@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BREST　テ対英単語アプリ</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="backButton" type="button" aria-label="戻る" hidden>‹</button>
+        <div class="title-area">
+          <p class="eyebrow" id="eyebrow">BREST　テ対英単語アプリ</p>
+          <div class="title-row">
+            <h1 id="screenTitle">学年を選択</h1>
+            <p class="title-alert" id="titleAlert" role="status"></p>
+          </div>
+        </div>
+      </header>
+
+      <section class="screen is-active" id="gradeScreen" aria-labelledby="screenTitle">
+        <div class="grade-grid" id="gradeButtons"></div>
+      </section>
+
+      <section class="screen" id="modeScreen" aria-labelledby="screenTitle">
+        <div class="mode-list">
+          <button class="mode-button mode-button-primary" id="rangeModeButton" type="button">
+            <span>範囲ランダム特訓</span>
+            <small>番号範囲を保存して4択演習</small>
+          </button>
+          <button class="mode-button" id="weakModeButton" type="button">
+            <span>苦手特訓</span>
+            <small>自動リスト・手動リスト</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="screen" id="rangeSetupScreen" aria-labelledby="screenTitle">
+        <form class="setup-form" id="rangeForm">
+          <div class="range-slots" id="rangeSlots" aria-label="保存範囲"></div>
+
+          <div class="field-row">
+            <label>
+              <span>開始番号</span>
+              <input id="startNo" type="number" inputmode="numeric" min="1" required>
+            </label>
+            <label>
+              <span>終了番号</span>
+              <input id="endNo" type="number" inputmode="numeric" min="1" required>
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>保存先</legend>
+            <div class="segmented segmented-three">
+              <label>
+                <input type="radio" name="rangeSlot" value="0" checked>
+                <span>1</span>
+              </label>
+              <label>
+                <input type="radio" name="rangeSlot" value="1">
+                <span>2</span>
+              </label>
+              <label>
+                <input type="radio" name="rangeSlot" value="2">
+                <span>3</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="secondary-button" id="saveRangeButton" type="button">この範囲を保存</button>
+
+          <fieldset>
+            <legend>出題方向</legend>
+            <div class="segmented">
+              <label>
+                <input type="radio" name="direction" value="en-ja" checked>
+                <span>英→日</span>
+              </label>
+              <label>
+                <input type="radio" name="direction" value="ja-en">
+                <span>日→英</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>問題数</legend>
+            <div class="segmented segmented-three">
+              <label>
+                <input type="radio" name="count" value="10" checked>
+                <span>10問</span>
+              </label>
+              <label>
+                <input type="radio" name="count" value="20">
+                <span>20問</span>
+              </label>
+              <label>
+                <input type="radio" name="count" value="all">
+                <span>全て</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="message" id="rangeMessage" role="status"></p>
+          <button class="primary-button" type="submit">スタート</button>
+        </form>
+      </section>
+
+      <section class="screen" id="weakMenuScreen" aria-labelledby="screenTitle">
+        <div class="mode-list" id="weakMenuList"></div>
+      </section>
+
+      <section class="screen" id="weakSetupScreen" aria-labelledby="screenTitle">
+        <div class="weak-toolbar">
+          <div class="search-wrap">
+            <label for="weakSearch">単語検索</label>
+            <input id="weakSearch" type="search" placeholder="英単語・意味・番号">
+          </div>
+          <div class="weak-count" id="weakCount">0語</div>
+        </div>
+        <div class="weak-list" id="weakList" aria-label="苦手単語リスト"></div>
+        <p class="message" id="weakMessage" role="status"></p>
+        <button class="primary-button sticky-action" id="startWeakQuizButton" type="button">このリストで特訓</button>
+      </section>
+
+      <section class="screen quiz-screen" id="quizScreen" aria-labelledby="screenTitle">
+        <div class="quiz-meta">
+          <span id="quizProgress">1 / 10</span>
+          <span id="quizScore">0問正解</span>
+        </div>
+        <div class="prompt-panel">
+          <p id="promptLabel">英単語</p>
+          <div id="promptText"></div>
+        </div>
+        <div class="choice-list" id="choices"></div>
+        <p class="answer-feedback" id="answerFeedback" aria-live="polite"></p>
+      </section>
+
+      <section class="screen" id="resultScreen" aria-labelledby="screenTitle">
+        <div class="result-summary">
+          <p class="result-score" id="resultScore"></p>
+          <p id="resultRate"></p>
+        </div>
+        <div class="missed-wrap">
+          <h2>間違えた単語</h2>
+          <div id="missedList"></div>
+        </div>
+        <div class="result-actions">
+          <button class="secondary-button" id="retryButton" type="button">同じ条件でもう一度</button>
+          <button class="primary-button" id="homeButton" type="button">学年選択へ</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="data/vocab.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
