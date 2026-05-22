@@ -71,7 +71,7 @@ button {
 
 .topbar h1 {
   margin: 1px 0 0;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.18;
   letter-spacing: 0;
   white-space: nowrap;
@@ -88,9 +88,9 @@ button {
 .eyebrow {
   margin: 0;
   color: var(--primary);
-  font-size: 12px;
+  font-size: 23px;
   font-weight: 900;
-  letter-spacing: 0.08em;
+  line-height: 1.15;
 }
 
 .icon-button {
@@ -120,6 +120,7 @@ button {
 .grade-grid,
 .mode-list,
 .setup-form,
+.login-form,
 .result-actions {
   display: grid;
   gap: 12px;
@@ -306,7 +307,8 @@ legend,
 }
 
 input[type="number"],
-input[type="search"] {
+input[type="search"],
+input[type="password"] {
   width: 100%;
   min-height: 50px;
   margin-top: 6px;

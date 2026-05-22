@@ -2,6 +2,8 @@
   "use strict";
 
   const AUTO_NEXT_MS = 800;
+  const APP_PASSWORD = "tetaitan";
+  const AUTH_KEY = "brest-vocab-authenticated";
   const VOCAB = Array.isArray(window.VOCAB_DATA) ? window.VOCAB_DATA : [];
   const WEAK_LISTS = [
     { id: "auto", label: "ランダム特訓ミス", type: "auto" },
@@ -10,6 +12,7 @@
   ];
 
   const screens = {
+    login: document.getElementById("loginScreen"),
     grade: document.getElementById("gradeScreen"),
     mode: document.getElementById("modeScreen"),
     rangeSetup: document.getElementById("rangeSetupScreen"),
@@ -24,6 +27,9 @@
     titleAlert: document.getElementById("titleAlert"),
     eyebrow: document.getElementById("eyebrow"),
     back: document.getElementById("backButton"),
+    loginForm: document.getElementById("loginForm"),
+    passwordInput: document.getElementById("passwordInput"),
+    loginMessage: document.getElementById("loginMessage"),
     gradeButtons: document.getElementById("gradeButtons"),
     rangeMode: document.getElementById("rangeModeButton"),
     weakMode: document.getElementById("weakModeButton"),
@@ -58,7 +64,7 @@
   };
 
   const state = {
-    screen: "grade",
+    screen: "login",
     selectedGrade: "",
     selectedWeakList: WEAK_LISTS[0],
     lastSetup: null,
@@ -116,7 +122,7 @@
       screen.classList.toggle("is-active", key === name);
     });
     state.screen = name;
-    els.back.hidden = name === "grade";
+    els.back.hidden = name === "grade" || name === "login";
     updateHeader(name);
     window.scrollTo({ top: 0, behavior: "auto" });
   }
@@ -127,6 +133,7 @@
       screen === "weakSetup" ? `${gradeText} / ${state.selectedWeakList.label}` : gradeText;
     els.titleAlert.textContent = "";
     const titles = {
+      login: "パスワード入力",
       grade: "学年を選択",
       mode: "特訓メニュー",
       rangeSetup: "範囲ランダム特訓",
@@ -160,6 +167,31 @@
     } else if (state.screen === "result") {
       setScreen("mode");
     }
+  }
+
+  function isAuthenticated() {
+    try {
+      return localStorage.getItem(AUTH_KEY) === "true";
+    } catch {
+      return false;
+    }
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    if (els.passwordInput.value === APP_PASSWORD) {
+      try {
+        localStorage.setItem(AUTH_KEY, "true");
+      } catch {
+        // Continue for this session even if browser storage is unavailable.
+      }
+      els.loginMessage.textContent = "";
+      els.passwordInput.value = "";
+      setScreen("grade");
+      return;
+    }
+    els.loginMessage.textContent = "パスワードが違います。";
+    els.passwordInput.select();
   }
 
   function renderGrades() {
@@ -565,6 +597,7 @@
 
   function bindEvents() {
     els.back.addEventListener("click", goBack);
+    els.loginForm.addEventListener("submit", handleLogin);
     els.rangeMode.addEventListener("click", () => {
       renderRangeSlots();
       state.rangePickStep = "start";
@@ -594,5 +627,5 @@
 
   renderGrades();
   bindEvents();
-  setScreen("grade");
+  setScreen(isAuthenticated() ? "grade" : "login");
 })();

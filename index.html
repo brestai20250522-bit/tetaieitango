@@ -19,7 +19,18 @@
         </div>
       </header>
 
-      <section class="screen is-active" id="gradeScreen" aria-labelledby="screenTitle">
+      <section class="screen is-active" id="loginScreen" aria-labelledby="screenTitle">
+        <form class="login-form" id="loginForm">
+          <label>
+            <span>パスワード</span>
+            <input id="passwordInput" type="password" autocomplete="current-password" required>
+          </label>
+          <p class="message" id="loginMessage" role="status"></p>
+          <button class="primary-button" type="submit">入室</button>
+        </form>
+      </section>
+
+      <section class="screen" id="gradeScreen" aria-labelledby="screenTitle">
         <div class="grade-grid" id="gradeButtons"></div>
       </section>
 
