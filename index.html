@@ -70,6 +70,14 @@
           </fieldset>
 
           <button class="secondary-button" id="saveRangeButton" type="button">この範囲を保存</button>
+          <button class="secondary-button" id="toggleRangeListButton" type="button">リストを表示</button>
+          <div class="range-list-panel" id="rangeListPanel" hidden>
+            <div class="range-list-head">
+              <span id="rangePickStatus">開始番号を選択</span>
+              <button class="text-button" id="resetRangePickButton" type="button">選び直す</button>
+            </div>
+            <div class="range-word-list" id="rangeWordList" aria-label="範囲選択用単語リスト"></div>
+          </div>
 
           <fieldset>
             <legend>出題方向</legend>

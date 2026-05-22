@@ -30,6 +30,11 @@
     rangeForm: document.getElementById("rangeForm"),
     rangeSlots: document.getElementById("rangeSlots"),
     saveRange: document.getElementById("saveRangeButton"),
+    toggleRangeList: document.getElementById("toggleRangeListButton"),
+    rangeListPanel: document.getElementById("rangeListPanel"),
+    rangePickStatus: document.getElementById("rangePickStatus"),
+    resetRangePick: document.getElementById("resetRangePickButton"),
+    rangeWordList: document.getElementById("rangeWordList"),
     startNo: document.getElementById("startNo"),
     endNo: document.getElementById("endNo"),
     rangeMessage: document.getElementById("rangeMessage"),
@@ -60,6 +65,7 @@
     quiz: null,
     locked: false,
     timer: 0,
+    rangePickStep: "start",
   };
 
   const gradeOrder = ["中学1年生", "中学2年生", "中学3年生"];
@@ -193,6 +199,73 @@
         els.rangeMessage.textContent = `保存${index + 1}を呼び出しました。`;
       });
       els.rangeSlots.append(button);
+    });
+  }
+
+  function renderRangeWordList() {
+    const items = getGradeItems();
+    els.rangeWordList.innerHTML = "";
+    items.forEach((item) => {
+      const button = document.createElement("button");
+      button.className = "range-word-item";
+      button.type = "button";
+      button.dataset.no = String(item.no);
+      button.innerHTML = `<span>${item.no}</span><strong>${item.word}</strong>`;
+      button.addEventListener("click", () => pickRangeNo(item.no));
+      els.rangeWordList.append(button);
+    });
+    updateRangePickStatus();
+  }
+
+  function toggleRangeList() {
+    const nextHidden = !els.rangeListPanel.hidden;
+    els.rangeListPanel.hidden = nextHidden;
+    els.toggleRangeList.textContent = nextHidden ? "リストを表示" : "リストを閉じる";
+    if (!nextHidden && els.rangeWordList.children.length === 0) {
+      renderRangeWordList();
+    }
+  }
+
+  function resetRangePick() {
+    state.rangePickStep = "start";
+    els.startNo.value = "";
+    els.endNo.value = "";
+    els.rangeMessage.textContent = "";
+    updateRangePickStatus();
+  }
+
+  function pickRangeNo(no) {
+    if (state.rangePickStep === "start") {
+      els.startNo.value = String(no);
+      els.endNo.value = "";
+      state.rangePickStep = "end";
+      els.rangeMessage.textContent = `${no}番を開始番号に入れました。`;
+    } else {
+      const start = Number(els.startNo.value);
+      if (Number.isInteger(start) && no < start) {
+        els.endNo.value = String(start);
+        els.startNo.value = String(no);
+        els.rangeMessage.textContent = `${no}〜${start}番を入力しました。`;
+      } else {
+        els.endNo.value = String(no);
+        els.rangeMessage.textContent = `${els.startNo.value}〜${no}番を入力しました。`;
+      }
+      state.rangePickStep = "start";
+    }
+    updateRangePickStatus();
+  }
+
+  function updateRangePickStatus() {
+    els.rangePickStatus.textContent =
+      state.rangePickStep === "start" ? "開始番号を選択" : "終了番号を選択";
+    const start = Number(els.startNo.value);
+    const end = Number(els.endNo.value);
+    [...els.rangeWordList.children].forEach((button) => {
+      const no = Number(button.dataset.no);
+      const isStart = Number.isInteger(start) && no === start;
+      const isEnd = Number.isInteger(end) && no === end;
+      button.classList.toggle("is-picked", isStart || isEnd);
+      button.classList.toggle("is-in-range", Number.isInteger(start) && Number.isInteger(end) && no >= start && no <= end);
     });
   }
 
@@ -494,6 +567,9 @@
     els.back.addEventListener("click", goBack);
     els.rangeMode.addEventListener("click", () => {
       renderRangeSlots();
+      state.rangePickStep = "start";
+      els.rangeListPanel.hidden = true;
+      els.toggleRangeList.textContent = "リストを表示";
       setScreen("rangeSetup");
     });
     els.weakMode.addEventListener("click", () => {
@@ -502,6 +578,10 @@
     });
     els.rangeForm.addEventListener("submit", handleRangeSubmit);
     els.saveRange.addEventListener("click", saveCurrentRange);
+    els.toggleRangeList.addEventListener("click", toggleRangeList);
+    els.resetRangePick.addEventListener("click", resetRangePick);
+    els.startNo.addEventListener("input", updateRangePickStatus);
+    els.endNo.addEventListener("input", updateRangePickStatus);
     els.weakSearch.addEventListener("input", renderWeakList);
     els.startWeakQuiz.addEventListener("click", startWeakQuiz);
     els.retry.addEventListener("click", retryLastQuiz);
