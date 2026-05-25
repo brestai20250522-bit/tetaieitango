@@ -168,8 +168,7 @@
 
   function matchesSearch(item, query) {
     if (!query) return true;
-    const text = `${item.level} ${item.word} ${item.meaning} ${item.pos || ""}`.toLowerCase();
-    return text.includes(query);
+    return item.word.toLowerCase().startsWith(query);
   }
 
   function getFilteredItems() {

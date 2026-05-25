@@ -31,11 +31,6 @@
       </section>
 
       <section class="screen" id="selectScreen" aria-labelledby="screenTitle">
-        <div class="search-wrap">
-          <label for="wordSearch">単語検索</label>
-          <input id="wordSearch" type="search" placeholder="英単語・意味を検索">
-        </div>
-
         <fieldset>
           <legend>学年目安</legend>
           <div class="segmented segmented-four">
@@ -96,6 +91,11 @@
             <span id="visibleCount">0語表示</span>
           </div>
           <button class="secondary-button compact-button" id="missListButton" type="button">ミスリスト</button>
+        </div>
+
+        <div class="search-wrap">
+          <label for="wordSearch">単語検索</label>
+          <input id="wordSearch" type="search" placeholder="英単語の先頭スペルで検索">
         </div>
 
         <div class="action-grid">
