@@ -149,10 +149,6 @@
     els.passwordInput.select();
   }
 
-  function currentLevelFilter() {
-    return document.querySelector("input[name='levelFilter']:checked")?.value || "all";
-  }
-
   function currentDirection() {
     return document.querySelector("input[name='direction']:checked")?.value || "en-ja";
   }
@@ -172,9 +168,8 @@
   }
 
   function getFilteredItems() {
-    const level = currentLevelFilter();
     const query = els.wordSearch.value.trim().toLowerCase();
-    return VOCAB.filter((item) => (level === "all" || item.level === level) && matchesSearch(item, query));
+    return VOCAB.filter((item) => matchesSearch(item, query));
   }
 
   function renderSelectList() {
@@ -450,9 +445,6 @@
     els.back.addEventListener("click", goBack);
     els.loginForm.addEventListener("submit", handleLogin);
     els.wordSearch.addEventListener("input", renderSelectList);
-    document.querySelectorAll("input[name='levelFilter']").forEach((input) => {
-      input.addEventListener("change", renderSelectList);
-    });
     els.selectVisible.addEventListener("click", selectVisibleItems);
     els.clearSelection.addEventListener("click", clearSelection);
     els.startSelected.addEventListener("click", startSelectedQuiz);
