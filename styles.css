@@ -343,6 +343,10 @@ fieldset {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.segmented-four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .segmented label {
   display: block;
 }
@@ -402,6 +406,125 @@ fieldset {
   color: var(--wrong);
   font-size: 14px;
   font-weight: 800;
+}
+
+.selection-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.24);
+  border-radius: 8px;
+  background: rgba(17, 17, 20, 0.9);
+}
+
+.selection-bar strong,
+.selection-bar span {
+  display: block;
+}
+
+.selection-bar strong {
+  color: var(--primary-strong);
+  font-size: 18px;
+}
+
+.selection-bar span {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.compact-button {
+  width: auto;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.word-list {
+  display: grid;
+  gap: 8px;
+  max-height: calc(100vh - 430px);
+  min-height: 180px;
+  overflow: auto;
+  padding-bottom: 82px;
+}
+
+.word-item {
+  display: grid;
+  grid-template-columns: 28px 70px 1fr;
+  gap: 9px;
+  align-items: center;
+  width: 100%;
+  min-height: 64px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.word-item-static {
+  grid-template-columns: 70px 1fr 36px;
+}
+
+.word-item input {
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+.level-badge {
+  display: grid;
+  min-height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  background: #1f1a0d;
+  color: var(--primary-strong);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.word-main {
+  min-width: 0;
+}
+
+.word-main strong,
+.word-main small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.word-main strong {
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.word-main small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.remove-button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #191a1f;
+  color: var(--wrong);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .weak-toolbar {
@@ -622,8 +745,21 @@ fieldset {
   }
 
   .segmented-three,
+  .segmented-four,
   .range-slots {
     grid-template-columns: 1fr;
+  }
+
+  .word-list {
+    max-height: calc(100vh - 500px);
+  }
+
+  .word-item {
+    grid-template-columns: 26px 62px 1fr;
+  }
+
+  .word-item-static {
+    grid-template-columns: 62px 1fr 34px;
   }
 
   #promptText {

@@ -13,7 +13,7 @@
         <div class="title-area">
           <p class="eyebrow" id="eyebrow">BREST　テ対英単語アプリ</p>
           <div class="title-row">
-            <h1 id="screenTitle">学年を選択</h1>
+            <h1 id="screenTitle">単語を選択</h1>
             <p class="title-alert" id="titleAlert" role="status"></p>
           </div>
         </div>
@@ -30,125 +30,100 @@
         </form>
       </section>
 
-      <section class="screen" id="gradeScreen" aria-labelledby="screenTitle">
-        <div class="grade-grid" id="gradeButtons"></div>
-      </section>
-
-      <section class="screen" id="modeScreen" aria-labelledby="screenTitle">
-        <div class="mode-list">
-          <button class="mode-button mode-button-primary" id="rangeModeButton" type="button">
-            <span>範囲ランダム特訓</span>
-            <small>番号範囲を保存して4択演習</small>
-          </button>
-          <button class="mode-button" id="weakModeButton" type="button">
-            <span>苦手特訓</span>
-            <small>自動リスト・手動リスト</small>
-          </button>
+      <section class="screen" id="selectScreen" aria-labelledby="screenTitle">
+        <div class="search-wrap">
+          <label for="wordSearch">単語検索</label>
+          <input id="wordSearch" type="search" placeholder="英単語・意味を検索">
         </div>
-      </section>
 
-      <section class="screen" id="rangeSetupScreen" aria-labelledby="screenTitle">
-        <form class="setup-form" id="rangeForm">
-          <div class="range-slots" id="rangeSlots" aria-label="保存範囲"></div>
-
-          <button class="secondary-button" id="toggleRangeListButton" type="button">リストを表示</button>
-          <div class="range-list-panel" id="rangeListPanel" hidden>
-            <div class="range-list-head">
-              <span id="rangePickStatus">開始番号を選択</span>
-              <button class="text-button" id="resetRangePickButton" type="button">選び直す</button>
-            </div>
-            <div class="range-word-list" id="rangeWordList" aria-label="範囲選択用単語リスト"></div>
-          </div>
-
-          <div class="field-row">
+        <fieldset>
+          <legend>学年目安</legend>
+          <div class="segmented segmented-four">
             <label>
-              <span>開始番号</span>
-              <input id="startNo" type="number" inputmode="numeric" min="1" required>
+              <input type="radio" name="levelFilter" value="all" checked>
+              <span>全て</span>
             </label>
             <label>
-              <span>終了番号</span>
-              <input id="endNo" type="number" inputmode="numeric" min="1" required>
+              <input type="radio" name="levelFilter" value="J1">
+              <span>J1</span>
+            </label>
+            <label>
+              <input type="radio" name="levelFilter" value="J2">
+              <span>J2</span>
+            </label>
+            <label>
+              <input type="radio" name="levelFilter" value="J3">
+              <span>J3</span>
             </label>
           </div>
+        </fieldset>
 
-          <fieldset>
-            <legend>保存先</legend>
-            <div class="segmented segmented-three">
-              <label>
-                <input type="radio" name="rangeSlot" value="0" checked>
-                <span>1</span>
-              </label>
-              <label>
-                <input type="radio" name="rangeSlot" value="1">
-                <span>2</span>
-              </label>
-              <label>
-                <input type="radio" name="rangeSlot" value="2">
-                <span>3</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <button class="secondary-button" id="saveRangeButton" type="button">この範囲を保存</button>
-
-          <fieldset>
-            <legend>出題方向</legend>
-            <div class="segmented">
-              <label>
-                <input type="radio" name="direction" value="en-ja" checked>
-                <span>英→日</span>
-              </label>
-              <label>
-                <input type="radio" name="direction" value="ja-en">
-                <span>日→英</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>問題数</legend>
-            <div class="segmented segmented-three">
-              <label>
-                <input type="radio" name="count" value="10" checked>
-                <span>10問</span>
-              </label>
-              <label>
-                <input type="radio" name="count" value="20">
-                <span>20問</span>
-              </label>
-              <label>
-                <input type="radio" name="count" value="all">
-                <span>全て</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <p class="message" id="rangeMessage" role="status"></p>
-          <button class="primary-button" type="submit">スタート</button>
-        </form>
-      </section>
-
-      <section class="screen" id="weakMenuScreen" aria-labelledby="screenTitle">
-        <div class="mode-list" id="weakMenuList"></div>
-      </section>
-
-      <section class="screen" id="weakSetupScreen" aria-labelledby="screenTitle">
-        <div class="weak-toolbar">
-          <div class="search-wrap">
-            <label for="weakSearch">単語検索</label>
-            <input id="weakSearch" type="search" placeholder="英単語・意味・番号">
+        <fieldset>
+          <legend>出題方向</legend>
+          <div class="segmented">
+            <label>
+              <input type="radio" name="direction" value="en-ja" checked>
+              <span>英→日</span>
+            </label>
+            <label>
+              <input type="radio" name="direction" value="ja-en">
+              <span>日→英</span>
+            </label>
           </div>
-          <div class="weak-count" id="weakCount">0語</div>
+        </fieldset>
+
+        <fieldset>
+          <legend>問題数</legend>
+          <div class="segmented segmented-three">
+            <label>
+              <input type="radio" name="quizCount" value="10" checked>
+              <span>10問</span>
+            </label>
+            <label>
+              <input type="radio" name="quizCount" value="20">
+              <span>20問</span>
+            </label>
+            <label>
+              <input type="radio" name="quizCount" value="all">
+              <span>全て</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="selection-bar">
+          <div>
+            <strong id="selectedCount">0語選択</strong>
+            <span id="visibleCount">0語表示</span>
+          </div>
+          <button class="secondary-button compact-button" id="missListButton" type="button">ミスリスト</button>
         </div>
-        <div class="weak-list" id="weakList" aria-label="苦手単語リスト"></div>
-        <p class="message" id="weakMessage" role="status"></p>
-        <button class="primary-button sticky-action" id="startWeakQuizButton" type="button">このリストで特訓</button>
+
+        <div class="action-grid">
+          <button class="secondary-button" id="selectVisibleButton" type="button">表示中を選択</button>
+          <button class="secondary-button" id="clearSelectionButton" type="button">選択解除</button>
+        </div>
+
+        <p class="message" id="selectMessage" role="status"></p>
+        <div class="word-list" id="wordList" aria-label="単語リスト"></div>
+        <button class="primary-button sticky-action" id="startSelectedButton" type="button">選んだ単語で演習</button>
+      </section>
+
+      <section class="screen" id="missScreen" aria-labelledby="screenTitle">
+        <div class="selection-bar">
+          <div>
+            <strong id="missCount">0語</strong>
+            <span>ミスした単語</span>
+          </div>
+          <button class="secondary-button compact-button" id="clearMissButton" type="button">空にする</button>
+        </div>
+        <p class="message" id="missMessage" role="status"></p>
+        <div class="word-list" id="missWordList" aria-label="ミスリスト"></div>
+        <button class="primary-button sticky-action" id="startMissButton" type="button">ミスリストだけ練習</button>
       </section>
 
       <section class="screen quiz-screen" id="quizScreen" aria-labelledby="screenTitle">
         <div class="quiz-meta">
           <span id="quizProgress">1 / 10</span>
-          <span id="quizScore">0問正解</span>
         </div>
         <div class="prompt-panel">
           <p id="promptLabel">英単語</p>
@@ -160,21 +135,21 @@
 
       <section class="screen" id="resultScreen" aria-labelledby="screenTitle">
         <div class="result-summary">
-          <p class="result-score" id="resultScore"></p>
-          <p id="resultRate"></p>
+          <p class="result-score" id="resultTitle">演習終了</p>
+          <p id="resultText"></p>
         </div>
         <div class="missed-wrap">
-          <h2>間違えた単語</h2>
-          <div id="missedList"></div>
+          <h2>今回ミスした単語</h2>
+          <div id="sessionMissList"></div>
         </div>
         <div class="result-actions">
-          <button class="secondary-button" id="retryButton" type="button">同じ条件でもう一度</button>
-          <button class="primary-button" id="homeButton" type="button">学年選択へ</button>
+          <button class="secondary-button" id="retryButton" type="button">もう一度</button>
+          <button class="primary-button" id="homeButton" type="button">単語選択へ</button>
         </div>
       </section>
     </main>
 
-    <script src="data/vocab.js?v=grade1-20260523"></script>
+    <script src="data/vocab.js?v=integrated-20260525"></script>
     <script src="app.js"></script>
   </body>
 </html>
